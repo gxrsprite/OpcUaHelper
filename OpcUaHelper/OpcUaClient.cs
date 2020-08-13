@@ -246,7 +246,7 @@ namespace OpcUaHelper
             }
             catch (Exception exception)
             {
-#if !NETSTANDARD2_0 && !NETSTANDARD2_1
+#if NET462 || NET48
                 ClientUtils.HandleException(OpcUaName, exception);
 #else
                 throw;
@@ -277,7 +277,7 @@ namespace OpcUaHelper
             }
             catch (Exception exception)
             {
-#if !NETSTANDARD2_0 && !NETSTANDARD2_1
+#if NET462 || NET48
                 ClientUtils.HandleException(OpcUaName, exception);
 #else
                 throw;
