@@ -140,7 +140,14 @@ namespace OpcUaHelper.Forms
             m_OpcUaClient = new OpcUaClient();
             m_OpcUaClient.OpcStatusChange += M_OpcUaClient_OpcStatusChange1; ;
             m_OpcUaClient.ConnectComplete += M_OpcUaClient_ConnectComplete;
+            m_OpcUaClient.OnError += M_OpcUaClient_OnError;
         }
+
+        private void M_OpcUaClient_OnError(OpcUaClient client, Exception exception)
+        {
+            ClientUtils.HandleException(client.OpcUaName, exception);
+        }
+
         /// <summary>
         /// 连接服务器结束后马上浏览根节点
         /// </summary>

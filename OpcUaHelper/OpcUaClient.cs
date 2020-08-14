@@ -246,14 +246,9 @@ namespace OpcUaHelper
             }
             catch (Exception exception)
             {
-#if NET462 || NET48
-                ClientUtils.HandleException(OpcUaName, exception);
-#else
-                throw;
-#endif
+                OnError?.Invoke(this, exception);
             }
         }
-
         /// <summary>
         /// Handles a reconnect event complete from the reconnect handler.
         /// </summary>
@@ -277,11 +272,7 @@ namespace OpcUaHelper
             }
             catch (Exception exception)
             {
-#if NET462 || NET48
-                ClientUtils.HandleException(OpcUaName, exception);
-#else
-                throw;
-#endif
+                OnError?.Invoke(this, exception);
             }
         }
 
@@ -404,7 +395,7 @@ namespace OpcUaHelper
                 return m_configuration;
             }
         }
-
+        public bool ShowDialogWhenError { get; set; } = false;
         #endregion
 
         #region Node Write/Read Support
@@ -1508,5 +1499,7 @@ namespace OpcUaHelper
         private Dictionary<string, Subscription> dic_subscriptions;        // 系统所有的节点信息
         #endregion
 
+        public delegate void OnErrorHandler(OpcUaClient client, Exception exception);
+        public event OnErrorHandler OnError;
     }
 }
